@@ -1,5 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
+import { track } from '@vercel/analytics';
+
 import VideoList  from '@/components/video-list';
 import { useGetVideos } from '@/lib/api';
 import { MdiAlert, MdiTelevisionOff, MingcuteLoadingFill } from './icons';
@@ -19,6 +22,12 @@ export default function VideoFeed({
   const sortParam = searchParams.get('sort');
   const sort: Sort = ((sortParam && (SORTS as readonly string[]).includes(sortParam)) ? sortParam : 'hot') as Sort;
   const { data: videos, error, isLoading } = useGetVideos({ postId, sort, subreddit, username });
+
+  useEffect(() => {
+    if (!error) return;
+
+    track('error', { error: error?.message, stack: error?.stack })
+  }, [error]);
 
   return (
     isLoading ?
