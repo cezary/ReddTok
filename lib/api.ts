@@ -17,7 +17,7 @@ export const useGetVideos = ({
   subreddit?: string;
   username?: string;
 }) => {
-  const limit = 100;
+  const limit = 30;
   const query = `site:v.redd.it+OR+site:redgifs`.replaceAll(':', '%3A');
   const showNsfw = true;
 
