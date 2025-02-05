@@ -5,9 +5,6 @@ import App from '@/components/app';
 
 interface Props {
   params: Promise<{
-    postId?: string;
-    slug?: string;
-    subreddit?: string;
     username?: string;
   }> 
 }
@@ -15,9 +12,9 @@ interface Props {
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   return {
-    title: `${params.subreddit}`,
+    title: `u/${params.username}`,
     openGraph: {
-      title: `${params.subreddit} | ReddTok`,
+      title: `u/${params.username} | ReddTok`,
     },
   };
 }

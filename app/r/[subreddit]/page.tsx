@@ -8,16 +8,15 @@ interface Props {
     postId?: string;
     slug?: string;
     subreddit?: string;
-    username?: string;
   }> 
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   return {
-    title: `${params.subreddit}`,
+    title: `r/${params.subreddit}`,
     openGraph: {
-      title: `${params.subreddit} | ReddTok`,
+      title: `r/${params.subreddit} | ReddTok`,
     },
   };
 }
