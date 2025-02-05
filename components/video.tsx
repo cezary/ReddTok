@@ -131,7 +131,7 @@ function Video(props: VideoProps) {
         rel="noreferrer"
       >
         <img
-          src={props.posterUrl}
+          src={props.posterUrl || 'noise.gif'}
           className="h-svh w-svw mx-auto p-px object-contain cursor-pointer"
           alt="poster"
           height={props.height}
@@ -147,7 +147,7 @@ function Video(props: VideoProps) {
             playsInline
             preload='auto'
             src={src as string}
-            poster={props.posterUrl}
+            poster={props.posterUrl || 'noise.gif'}
             playerRef={playerRef}
             height={props.height}
             width={props.width}

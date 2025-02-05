@@ -26,7 +26,7 @@ export default function VideoFeed({
   useEffect(() => {
     if (!error) return;
 
-    track('error', { error: error?.message, stack: error?.stack })
+    track('error', { error: error?.message })
   }, [error]);
 
   return (
@@ -38,11 +38,10 @@ export default function VideoFeed({
       </div> :
     error ?
       <div className="grid place-items-center h-dvh w-fill">
-      <div className='flex flex-col gap-4 items-center'>
+      <div className='flex flex-col gap-4 items-center max-w-md'>
         <div className='flex gap-2 items-center text-xl'>
           <MdiAlert /> There was an error fetching videos :(
         </div>
-        <div>Message: {error.message}</div>
       </div>
       </div> :
     videos?.length === 0 ?

@@ -1,4 +1,6 @@
+import { track } from '@vercel/analytics';
 import { unescape } from 'lodash-es';
+import fetchJsonp from 'fetch-jsonp';
 import useSwr from 'swr';
 
 import { DEFAULT_SUBREDDITS } from '@/lib/constants';
@@ -22,7 +24,7 @@ export const useGetVideos = ({
   let path;
   let url;
   if (postId) {
-    url = `https://api.reddit.com/r/${subreddit}/comments/${postId}.json`
+    url = `https://www.reddit.com/r/${subreddit}/comments/${postId}.json`
   } else {
     if (username) {
       path = `/user/${username}/submitted`;
@@ -32,12 +34,19 @@ export const useGetVideos = ({
       subreddit = DEFAULT_SUBREDDITS.join('%2B');
       path = `/r/${subreddit}`;
     }
-    url = `https://api.reddit.com${path}/search/.json?q=${query}&include_over_18=${showNsfw ? 'on' : 'off'}&restrict_sr=on&sort=${sort}&limit=${limit}`
+    url = `https://www.reddit.com${path}/search/.json?q=${query}&include_over_18=${showNsfw ? 'on' : 'off'}&restrict_sr=on&sort=${sort}&limit=${limit}`
   }
 
   async function fetcher(url: string) {
-    const res = await fetch(url);
-    const json: RedditPostListing | RedditPostListing[] = await res.json()
+    let json: RedditPostListing | RedditPostListing[];
+    try {
+      const res = await fetchJsonp(url+`&_=${Date.now()}`, { jsonpCallback: 'jsonp'});
+
+      json = await res.json()
+    } catch (error) {
+      track('error', { error: (error as Error).message })
+      throw error;
+    }
   
     const videoTitleSet = new Set<string>();
     const videoUrlSet = new Set<string>();
