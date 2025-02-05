@@ -22,7 +22,7 @@ export const useGetVideos = ({
   let path;
   let url;
   if (postId) {
-    url = `https://www.reddit.com/r/${subreddit}/comments/${postId}.json`
+    url = `https://api.reddit.com/r/${subreddit}/comments/${postId}.json`
   } else {
     if (username) {
       path = `/user/${username}/submitted`;
@@ -32,7 +32,7 @@ export const useGetVideos = ({
       subreddit = DEFAULT_SUBREDDITS.join('%2B');
       path = `/r/${subreddit}`;
     }
-    url = `https://www.reddit.com${path}/search/.json?q=${query}&include_over_18=${showNsfw ? 'on' : 'off'}&restrict_sr=on&sort=${sort}&limit=${limit}`
+    url = `https://api.reddit.com${path}/search/.json?q=${query}&include_over_18=${showNsfw ? 'on' : 'off'}&restrict_sr=on&sort=${sort}&limit=${limit}`
   }
 
   async function fetcher(url: string) {
