@@ -10,6 +10,7 @@ import { requestFullscreen } from '@/lib/video';
 import { useUIStore } from '@/lib/stores/ui';
 
 export interface VideoProps {
+  id: string;
   likes: number;
   comments: number;
   shares: number;
@@ -24,7 +25,7 @@ export interface VideoProps {
   subreddit: string;
 }
 
-function VideoList({ videos }: { videos: VideoProps[] }) {
+function VideoList({ loadMore,videos }: { loadMore: () => void, videos: VideoProps[] }) {
   const { muted, setMuted, paused, setPaused } = useUIStore();
   const [current, setCurrent] = useState(0);
   const [scrollIndex, setScrollIndex] = useState(0);
@@ -146,6 +147,12 @@ function VideoList({ videos }: { videos: VideoProps[] }) {
   function handleAutoscroll(autoscroll: boolean) {
     setAutoscroll(autoscroll);
   }
+
+  useEffect(() => {
+    if (scrollIndex === videos.length - 2) {
+      loadMore()
+    }
+  }, [loadMore, scrollIndex, videos.length])
 
   return (
     <div className="h-dvh w-fill">
