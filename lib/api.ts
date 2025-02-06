@@ -1,11 +1,9 @@
 import { track } from '@vercel/analytics';
-import { unescape } from 'lodash-es';
 import fetchJsonp from 'fetch-jsonp';
 import useSWRInfinite from 'swr/infinite'
 
 import { DEFAULT_SUBREDDITS } from '@/lib/constants';
 import { RedditPostListing, Sort } from '@/lib/types';
-import { VideoProps } from '@/components/video-list';
 
 export const useGetVideos = ({
   postId,
@@ -23,8 +21,8 @@ export const useGetVideos = ({
   const showNsfw = true;
 
   
-  function getKey(pageIndex: number, previousPageData: VideoProps[] | undefined) {
-    const after = previousPageData?.at(-1)?.id;
+  function getKey(pageIndex: number, previousPageData: RedditPostListing | undefined) {
+    const after = previousPageData?.data?.children?.at(-1)?.data?.id;
     
     let path;
     let url;
@@ -45,62 +43,19 @@ export const useGetVideos = ({
     return url
   }
 
-
   async function fetcher(url: string) {
-    let json: RedditPostListing | RedditPostListing[];
     try {
       const res = await fetchJsonp(url+`&_=${Date.now()}`, { jsonpCallback: 'jsonp'});
-
-      json = await res.json()
+      const json: RedditPostListing | RedditPostListing[] = await res.json()
+      return json;
     } catch (error) {
       track('error', { error: (error as Error).message, version: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || 'unknown' })
       throw error;
     }
-  
-    const videoTitleSet = new Set<string>();
-    const videoUrlSet = new Set<string>();
-    const videosList = (Array.isArray(json) ? json[0] : json).data.children
-      .map(c => c.data)
-      // remove posts with no video url or deleted author
-      .filter(d => !d.subreddit.startsWith('u_'))
-      // remove deleted posts
-      .filter(d => (d.media?.reddit_video?.hls_url || d.preview?.reddit_video_preview?.hls_url) && d.author !== '[deleted]')
-      // remove duplicate videos by filtering posts with same author and title
-      .filter(d => {
-        const videoTitleKey = `${d.author}:${d.title.trim()}`;
-  
-        if (videoTitleSet.has(videoTitleKey)) {
-          return false;
-        }
-        if (videoUrlSet.has(d.url)) {
-          return false;
-        }
-  
-        videoTitleSet.add(videoTitleKey);
-        videoUrlSet.add(d.url);
-        return true;
-      })
-      .map(d => ({
-        id: d.id,
-        likes: d.score,
-        comments: d.num_comments,
-        shares: d.num_comments,
-        username: d.author,
-        description: unescape(d.title)!,
-        src: `https://www.reddit.com${d.permalink}`,
-        postUrl: `https://www.reddit.com${d.permalink}`,
-        posterUrl: unescape(d.preview?.images[0]?.resolutions.at(-1)?.url),
-        subreddit: d.subreddit,
-        url: unescape(d.media?.reddit_video?.hls_url || d.preview?.reddit_video_preview?.hls_url) || '/noise.gif',
-        height: d.media?.reddit_video?.height || d.preview?.reddit_video_preview?.height || 480,
-        width: d.media?.reddit_video?.width || d.preview?.reddit_video_preview?.width || 640,
-      }))
-      .filter(d => !!d.url)
-  
-    return videosList
   }
 
   return useSWRInfinite((pageIndex, previousData) => getKey(pageIndex, previousData), fetcher, {
+    revalidateFirstPage: false,
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

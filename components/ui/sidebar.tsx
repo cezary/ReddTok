@@ -550,6 +550,7 @@ const SidebarMenuButton = React.forwardRef<
       size = "default",
       tooltip,
       className,
+      // [[feat]: close sidebar on item click (mobile) · Issue #5561 · shadcn-ui/ui](https://github.com/shadcn-ui/ui/issues/5561#issuecomment-2461329627)
       onClick,
       ...props
     },

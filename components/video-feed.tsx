@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { track } from '@vercel/analytics';
 
-import VideoList, { VideoProps }  from '@/components/video-list';
+import { MdiAlert, MdiTelevisionOff, MingcuteLoadingFill } from '@/components/icons';
+import VideoList  from '@/components/video-list';
 import { useGetVideos } from '@/lib/api';
-import { MdiAlert, MdiTelevisionOff, MingcuteLoadingFill } from './icons';
-import { useSearchParams } from 'next/navigation';
+import { formatGetVideosData } from '@/lib/format';
 import { Sort, SORTS } from '@/lib/types';
 
 export default function VideoFeed({
@@ -22,7 +23,7 @@ export default function VideoFeed({
   const sortParam = searchParams.get('sort');
   const sort: Sort = ((sortParam && (SORTS as readonly string[]).includes(sortParam)) ? sortParam : 'hot') as Sort;
   const { data, error, isLoading, size, setSize, isValidating } = useGetVideos({ postId, sort, subreddit, username });
-  const videos = data?.flat(Infinity) as VideoProps[];
+  const videos = formatGetVideosData(data);
 
   useEffect(() => {
     if (!error) return;
