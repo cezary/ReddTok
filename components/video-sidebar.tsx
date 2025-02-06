@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
-import { MdComment, MdFavorite } from "react-icons/md";
 
-import { MdiChevronDown, MdiChevronUp, MdiLightShare } from '@/components/icons';
+import { HugeiconsBubbleChat, MaterialSymbolsLightFileSaveOutline, MdiChevronDown, MdiChevronUp, MdiLightHeart, MdiLightShare } from '@/components/icons';
 import Link from "@/components/link";
 import { cn, formatNumber } from '@/lib/utils';
 import { useUIStore } from '@/lib/stores/ui';
@@ -60,18 +59,18 @@ function VideoSideBar({ comments, description, isFirst, isLast, likes, postUrl, 
       </section>
       <section className="absolute bottom-0 right-0 text-white p-2 lg:p-5 space-y-2 lg:space-y-5">
         <div className="text-center">
-          <MdFavorite className='inline-block size-10' />
+          <MdiLightHeart className='inline-block size-10' />
           <p>{formatNumber(likes)}</p>
         </div>
         <div className="text-center">
           <Link href={url} target="_blank" rel="noreferrer">
-            <MdComment className='inline-block text-4xl' />
+            <HugeiconsBubbleChat className='inline-block text-3xl' />
             <p>{formatNumber(comments)}</p>
           </Link>
         </div>
         {false && 
         <div className="text-center" onClick={() => setCommentDrawerOpen(true)}>
-          <MdComment className='inline-block text-4xl' />
+          <HugeiconsBubbleChat className='inline-block text-3xl' />
           <p>{formatNumber(comments)}</p>
         </div>
         }
@@ -81,8 +80,14 @@ function VideoSideBar({ comments, description, isFirst, isLast, likes, postUrl, 
             <p>Link</p>
           </Link>
         </div> */}
+        <div className="text-center">
+          <Link href={`https://rapidsave.com/info?url=${url}`} target="_blank" rel="noreferrer">
+            <MaterialSymbolsLightFileSaveOutline className='inline-block text-3xl' />
+            <p>Save</p>
+          </Link>
+        </div>
         <div className="text-center cursor-pointer" onClick={handleShareClick}>
-          <MdiLightShare className='inline-block text-4xl' />
+          <MdiLightShare className='inline-block text-3xl' />
           <p>Share</p>
         </div>
         {/* <div className="text-center">
