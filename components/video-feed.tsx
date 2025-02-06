@@ -44,6 +44,10 @@ export default function VideoFeed({
         <div className='flex flex-col gap-4 items-center max-w-md'>
           <div className='flex gap-2 items-center text-xl'>
             <MdiAlert /> There was an error fetching videos :(
+            <br/>
+          </div>
+          <div className='flex gap-2 items-center text-sm'>
+            Reddit may be blocking the request, please try again later.
           </div>
         </div>
         </div> :
@@ -51,6 +55,10 @@ export default function VideoFeed({
         <div className="grid place-items-center h-dvh w-fill">
           <div className='flex gap-2 items-center text-xl'>
             <MdiTelevisionOff /> No videos found
+            <br/>
+          </div>
+          <div className='flex gap-2 items-center text-sm'>
+            Reddit may be rate limiting the request, please try again later.
           </div>
         </div> :
         videos && <VideoList videos={videos} loadMore={() => !isLoading && !isValidating && setSize(size + 1)} />
