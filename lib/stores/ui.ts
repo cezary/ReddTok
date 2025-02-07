@@ -4,6 +4,7 @@ interface Alert {
   title: string | undefined;
   description: React.ReactNode | string | undefined;
 }
+
 interface UIState {
   alert?: Alert;
   closeAlertCallback?: () => void;

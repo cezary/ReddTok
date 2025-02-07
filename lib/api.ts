@@ -1,9 +1,18 @@
 import { track } from '@vercel/analytics';
-import fetchJsonp from 'fetch-jsonp';
 import useSWRInfinite from 'swr/infinite'
 
 import { DEFAULT_SUBREDDITS } from '@/lib/constants';
 import { RedditPostListing, Sort } from '@/lib/types';
+
+function updateSearchParams(urlString: string, queryParams: Record<string, number | string | undefined>) {
+  const url = new URL(urlString)
+  const entries = [...url.searchParams.entries(), ...Object.entries(queryParams)]
+    .filter(([, v]) => v !== undefined) as [string, string][];
+  const searchParams = Object.fromEntries(entries);
+
+  url.search = new URLSearchParams(searchParams).toString().replaceAll('%2B', '+').replaceAll('%3A', ':');
+  return url.toString();
+}
 
 export const useGetVideos = ({
   postId,
@@ -17,7 +26,7 @@ export const useGetVideos = ({
   username?: string;
 }) => {
   const limit = 5;
-  const query = `site:v.redd.it+OR+site:redgifs`.replaceAll(':', '%3A');
+  const query = `site:v.redd.it+OR+site:redgifs`;
   const showNsfw = true;
 
   
@@ -37,7 +46,15 @@ export const useGetVideos = ({
         subreddit = DEFAULT_SUBREDDITS.join('%2B');
         path = `/r/${subreddit}`;
       }
-      url = `https://www.reddit.com${path}/search/.json?q=${query}&${after ? 'after=t3_'+after+'&' : ''}include_over_18=${showNsfw ? 'on' : 'off'}&restrict_sr=on&sort=${sort}&limit=${limit}`
+      url = updateSearchParams(`https://www.reddit.com${path}/search/.json`, {
+        q: query,
+        after: after ? `t3_${after}` : undefined,
+        include_over_18: showNsfw ? 'on' : 'off',
+        restrict_sr: 'on',
+        sort,
+        limit,
+        _: Date.now()
+      });
     }
 
     return url
@@ -45,7 +62,7 @@ export const useGetVideos = ({
 
   async function fetcher(url: string) {
     try {
-      const res = await fetchJsonp(url+`&_=${Date.now()}`, { jsonpCallback: 'jsonp'});
+      const res = await fetch(url);
       const json: RedditPostListing | RedditPostListing[] = await res.json()
       return json;
     } catch (error) {
