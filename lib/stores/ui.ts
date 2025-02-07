@@ -16,6 +16,8 @@ interface UIState {
   setMuted: (muted: boolean) => void;
   paused: boolean;
   setPaused: (paused: boolean) => void;
+  live: boolean;
+  setLive: (live: boolean) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -31,4 +33,7 @@ export const useUIStore = create<UIState>((set) => ({
 
   paused: false,
   setPaused: (paused: boolean) => set({ paused }),
+
+  live: false,
+  setLive: (live: boolean) => set({ live }),
 }))

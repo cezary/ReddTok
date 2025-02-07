@@ -15,11 +15,13 @@ function updateSearchParams(urlString: string, queryParams: Record<string, numbe
 }
 
 export const useGetVideos = ({
+  live,
   postId,
   sort='hot',
   subreddit,
   username,
 }: {
+  live?: boolean;
   postId?: string;
   sort?: Sort;
   subreddit?: string;
@@ -32,7 +34,7 @@ export const useGetVideos = ({
   
   function getKey(pageIndex: number, previousPageData: RedditPostListing | undefined) {
     const after = previousPageData?.data?.children?.at(-1)?.data?.id;
-    
+
     let path;
     let url;
     if (postId) {
@@ -43,6 +45,10 @@ export const useGetVideos = ({
       } else if (subreddit) {
         path = `/r/${subreddit}`;
       } else {
+        if (!live) {
+          return `/api/${sort}.json`;
+        }
+
         subreddit = DEFAULT_SUBREDDITS.join('%2B');
         path = `/r/${subreddit}`;
       }
