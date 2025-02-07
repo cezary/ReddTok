@@ -17,11 +17,11 @@ function VideoFooter({ description, subreddit, username }: VideoFooterProps) {
     <div className="absolute bottom-0 left-0 p-2 lg:p-5 pr-20 lg:pr-5 lg:pb-8 max-w-lg text-white">
       <div className="space-y-1 lg:space-y-2">
         <h3 className='text-lg'>
-          <Link href={`/r/${subreddit}`} className='font-extrabold'>
+          <Link href={`https://www.reddit.com/r/${subreddit}`} className='font-extrabold' target="_blank" rel="noreferrer">
             r/{subreddit}
           </Link>
           {' - '}
-          <Link href={`/u/${username}`} className='font-extrabold'>
+          <Link href={`https://www.reddit.com/u/${username}`} className='font-extrabold' target="_blank" rel="noreferrer">
             {username}
           </Link>
         </h3>
