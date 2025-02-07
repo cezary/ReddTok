@@ -8,6 +8,7 @@ import Video from '@/components/video';
 import { SEEK_TIME } from '@/lib/constants';
 import { requestFullscreen } from '@/lib/video';
 import { useUIStore } from '@/lib/stores/ui';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export interface VideoProps {
   id: string;
@@ -25,7 +26,11 @@ export interface VideoProps {
   subreddit: string;
 }
 
-function VideoList({ loadMore,videos }: { loadMore: () => void, videos: VideoProps[] }) {
+function VideoList({ loadMore, videos }: { loadMore: () => void, videos: VideoProps[] }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const url = `${pathname}?${searchParams}`;
+
   const { muted, setMuted, paused, setPaused } = useUIStore();
   const [current, setCurrent] = useState(0);
   const [scrollIndex, setScrollIndex] = useState(0);
@@ -62,6 +67,10 @@ function VideoList({ loadMore,videos }: { loadMore: () => void, videos: VideoPro
 
     return () => document.body.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
+
+  useEffect(function () {
+    handleScroll({ target: document.body } as unknown as Event)
+  }, [handleScroll, url]);
 
   function handleVisibilitychange() {
     setVisible(!document.hidden);
