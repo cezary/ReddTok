@@ -14,6 +14,11 @@ function updateSearchParams(urlString: string, queryParams: Record<string, numbe
   return url.toString();
 }
 
+class RedditError extends Error {
+  info?: object;
+  status?: number;
+}
+
 export const useGetVideos = ({
   live,
   postId,
@@ -59,7 +64,6 @@ export const useGetVideos = ({
         restrict_sr: 'on',
         sort,
         limit,
-        _: Date.now()
       });
     }
 
@@ -69,6 +73,15 @@ export const useGetVideos = ({
   async function fetcher(url: string) {
     try {
       const res = await fetch(url);
+
+      if (!res.ok) {
+        const error = new RedditError('An error occurred while fetching the data.')
+        // Attach extra info to the error object.
+        error.info = await res.json()
+        error.status = res.status
+        throw error
+      }
+
       const json: RedditPostListing | RedditPostListing[] = await res.json()
       return json;
     } catch (error) {
