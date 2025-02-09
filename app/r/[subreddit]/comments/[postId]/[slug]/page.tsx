@@ -17,7 +17,7 @@ interface Props {
 //   return {
 //     title: `${params.subreddit}`,
 //     openGraph: {
-//       title: `${params.subreddit} | ReddTok`,
+//       title: `${params.subreddit} | $PROCESS.ENV.NEXT_PUBLIC_SITE_NAME}`,
 //     },
 //   };
 // }

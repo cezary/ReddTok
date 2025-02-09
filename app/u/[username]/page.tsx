@@ -15,7 +15,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   return {
     title: `u/${params.username}`,
     openGraph: {
-      title: `u/${params.username} | ReddTok`,
+      title: `u/${params.username} | ${process.env.NEXT_PUBLIC_SITE_NAME}`,
     },
   };
 }

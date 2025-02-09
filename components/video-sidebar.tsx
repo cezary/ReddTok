@@ -29,7 +29,7 @@ function VideoSideBar({ comments, description, isFirst, isLast, likes, postUrl, 
     }
 
     navigator.share({
-      title: `reddtok: ${description}`,
+      title: `${process.env.NEXT_PUBLIC_SITE_NAME}: ${description}`,
       // text: description,
       url: appUrl
     });

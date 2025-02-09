@@ -6,7 +6,7 @@ import App from '@/components/app';
 export async function generateMetadata(): Promise<Metadata> {
   return {
     openGraph: {
-      title: 'ReddTok',
+      title: `${process.env.NEXT_PUBLIC_SITE_NAME}`,
       images: [
         {
           url: '/logo-512.png',

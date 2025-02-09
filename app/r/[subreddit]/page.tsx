@@ -17,7 +17,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   return {
     title: `r/${params.subreddit}`,
     openGraph: {
-      title: `r/${params.subreddit} | ReddTok`,
+      title: `r/${params.subreddit} | ${process.env.NEXT_PUBLIC_SITE_NAME}`,
     },
   };
 }

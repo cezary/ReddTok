@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "ReddTok",
-    template: "%s | ReddTok",
+    default: `${process.env.NEXT_PUBLIC_SITE_NAME}`,
+    template: `%s | ${process.env.NEXT_PUBLIC_SITE_NAME}`,
   },
   description: "the latest, trending videos tailored for you",
 };

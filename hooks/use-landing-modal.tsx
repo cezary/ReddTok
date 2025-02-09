@@ -11,8 +11,8 @@ export const useLandingModal = () => {
     setMuted(true);
     setPaused(true);
     setAlert({
-      title: 'Welcome to ReddTok!',
-      description: "ReddTok is a Tiktok-like client for Reddit short-form videos. ReddTok lets you watch videos from Reddit as if you were on TikTok.\n\nIf you have any feedback, please reach out to me on X @czarizard.",
+      title: `Welcome to ${process.env.NEXT_PUBLIC_SITE_NAME}!`,
+      description: `${process.env.NEXT_PUBLIC_SITE_NAME} is a Tiktok-like client for Reddit short-form videos. ${process.env.NEXT_PUBLIC_SITE_NAME} lets you watch videos from Reddit as if you were on TikTok.\n\nIf you have any feedback, please reach out to me on X @czarizard.`,
     }, () => {
       setMuted(false)
       setPaused(false)

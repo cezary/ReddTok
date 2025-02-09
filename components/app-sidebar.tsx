@@ -1,5 +1,11 @@
 'use client';
 
+import { useSearchParams } from "next/navigation";
+import React, { useCallback } from "react";
+
+import { MaterialSymbolsClearDayRounded, MdiAlert, MdiFire, MdiFormatVerticalAlignTop, MdiInformationSlabCircleOutline, MdiNewBox, MdiTrendingUp } from "@/components/icons"
+import Link from "@/components/link"
+import { Label } from "@/components/ui/label";
 import {
   Sidebar,
   SidebarContent,
@@ -27,7 +33,7 @@ export function AppSidebar() {
       title: 'About',
       description: (
         <>
-          ReddTok is a TikTok-like client for Reddit videos.
+          {process.env.NEXT_PUBLIC_SITE_NAME} is a TikTok-like client for Reddit videos.
           <br />
           <br />
           Made by <a href='https://x.com/czarizard' className='text-white' target='_blank' rel='noreferrer'>@czarizard</a>.
@@ -39,12 +45,17 @@ export function AppSidebar() {
     })
   }
 
+  const handleLiveModeClick = useCallback(function handleLiveModeClick() {
+    console.log('handleLiveModeClick', !live)
+    setLive(!live);
+  }, [live, setLive]);
+
   return (
     <Sidebar className='hidden'>
       <SidebarHeader className='flex flex-row'>
         <SidebarTrigger className='[&_svg]:size-8' />
         <Link href='/'>
-          <h1 className='text-2xl font-bold'>ReddTok</h1>
+          <h1 className='text-2xl font-bold'>{process.env.NEXT_PUBLIC_SITE_NAME}</h1>
         </Link>
       </SidebarHeader>
       <SidebarContent>
