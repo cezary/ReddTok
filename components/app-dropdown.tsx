@@ -41,7 +41,7 @@ export default function AppDropdown() {
 
   return (
     <>
-      <section className="absolute top-0 lg:top-0 right-0 text-white p-2">
+      <section>
         <DropdownMenu
           open={open}
           onOpenChange={setOpen}
