@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { track } from '@vercel/analytics';
 
+import AppHeader from '@/components/app-header';
 import { MdiAlert, MdiTelevisionOff, MingcuteLoadingFill } from '@/components/icons';
 import VideoList  from '@/components/video-list';
 import { useGetVideos } from '@/lib/api';
@@ -64,6 +65,9 @@ export default function VideoFeed({
           </div>
         </div> :
         videos && <VideoList videos={videos} loadMore={() => !isLoading && !isValidating && setSize(size + 1)} />
+      }
+      {
+        !isLoading ? <AppHeader /> : null
       }
     </>
   );
