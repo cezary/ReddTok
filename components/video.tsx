@@ -4,11 +4,10 @@
 import React, { useRef, useEffect } from 'react';
 
 import HlsPlayer from '@/components/hls-player';
+import VideoButtons from '@/components/video-buttons';
 import VideoFooter from '@/components/video-footer';
-import VideoSideBar from '@/components/video-sidebar';
-import VideoButtons from '@/components//video-buttons';
-import VideoHeader from '@/components/video-header';
 import VideoProgress from '@/components/video-progress';
+import VideoSideBar from '@/components/video-sidebar';
 import { useUIStore } from '@/lib/stores/ui';
 import { cn } from '@/lib/utils';
 
@@ -164,7 +163,6 @@ function Video(props: VideoProps) {
           playerRef={playerRef}
         />
       </a>
-      <VideoHeader />
       <VideoFooter
         description={props.description}
         postUrl={props.postUrl}

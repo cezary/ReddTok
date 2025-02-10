@@ -1,3 +1,5 @@
+export const DEFAULT_SORT = 'hot';
+
 export const SEEK_TIME = 5;
 
 export const MAYBE_SUBREDDITS = [

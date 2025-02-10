@@ -34,16 +34,6 @@ export default function VideoButtons({ autoscroll, onAutoscrollToggle, playerRef
     requestFullscreen(currentVideoEl);
   }
 
-  // function handlePictureInPicture() {
-  //   const currentVideoEl = playerRef.current;
-
-  //   if (!currentVideoEl) {
-  //     return;
-  //   }
-
-  //   requestPictureInPicture(currentVideoEl);
-  // }
-
   function handlePlayClick() {
     setPaused(!paused);
   }
@@ -60,7 +50,6 @@ export default function VideoButtons({ autoscroll, onAutoscrollToggle, playerRef
 
     return () => playerEl?.removeEventListener('onended', handleEnded);
   }, []);
-
 
   return (
     <>
@@ -121,20 +110,6 @@ export default function VideoButtons({ autoscroll, onAutoscrollToggle, playerRef
                 }}
               />
             </DropdownMenuItem>
-            {/* <DropdownMenuItem className='[&>svg]:size-7 [&>label]:grow [&>label+*]:ml-2'>
-              <MaterialSymbolsArrowWarmUpRounded className='inline-block' />
-              <Label htmlFor="autoscroll">
-                Autoscroll
-              </Label>
-              <Switch
-                id="autoscroll"
-                checked={autoscroll}
-                onClick={e => {
-                  e.stopPropagation()
-                  onAutoscrollToggle(!autoscroll);
-                }}
-              />
-            </DropdownMenuItem> */}
             <DropdownMenuItem className='[&>svg]:size-7 [&>label]:grow' onClick={() => setMuted(!muted)} >
               <MdiVolumeMute className='inline-block' />
               <Label>
