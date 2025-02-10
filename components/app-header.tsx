@@ -1,9 +1,10 @@
 import React from "react";
 
+import AboutButton from "@/components/about-button";
 import AppDropdown from "@/components/app-dropdown";
+import AppMuteButton from "@/components/app-mute-button";
+import AppSortMenu from "@/components/app-sort-menu";
 import Link from "@/components/link";
-import AppMuteButton from "./app-mute-button";
-import AppSortMenu from "./app-sort-menu";
 
 function AppHeader() {
   return (
@@ -13,6 +14,7 @@ function AppHeader() {
       </Link>
       <AppSortMenu />
       <div className='spacer flex-grow'></div>
+      <AboutButton />
       <AppDropdown />
 
       {/* flexbox "line break" */}
