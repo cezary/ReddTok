@@ -32,8 +32,6 @@ interface VideoProps {
   postUrl: string;
   subreddit: string;
   loop: boolean;
-  autoscroll: boolean;
-  onAutoscrollToggle: (autoscroll: boolean) => void;
   isFirst: boolean;
   isLast: boolean;
 }
@@ -153,11 +151,7 @@ function Video(props: VideoProps) {
             onEnded={props.onEnded}
           />
         ) : null}
-        <VideoButtons
-          playerRef={playerRef}
-          autoscroll={props.autoscroll}
-          onAutoscrollToggle={props.onAutoscrollToggle}
-        />
+        <VideoButtons />
         <VideoProgress
           current={props.current}
           playerRef={playerRef}

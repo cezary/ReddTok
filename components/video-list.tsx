@@ -31,11 +31,10 @@ function VideoList({ loadMore, videos }: { loadMore: () => void, videos: VideoPr
   const searchParams = useSearchParams();
   const url = `${pathname}?${searchParams}`;
 
-  const { muted, setMuted, paused, setPaused } = useUIStore();
+  const { autoscroll, muted, setMuted, paused, setPaused } = useUIStore();
   const [current, setCurrent] = useState(0);
   const [scrollIndex, setScrollIndex] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [autoscroll, setAutoscroll] = useState(true);
 
   // fixes a bug when video paused while still scrolling, resumes on subsequent scroll event
   const roundedRef = useRef(current);
@@ -153,10 +152,6 @@ function VideoList({ loadMore, videos }: { loadMore: () => void, videos: VideoPr
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [muted, paused, setMuted, setPaused])
 
-  function handleAutoscroll(autoscroll: boolean) {
-    setAutoscroll(autoscroll);
-  }
-
   useEffect(() => {
     if (scrollIndex === videos.length - 2) {
       loadMore()
@@ -175,8 +170,6 @@ function VideoList({ loadMore, videos }: { loadMore: () => void, videos: VideoPr
           loadVideo={current === index || scrollIndex === index}
           onEnded={handleEnded}
           loop={!autoscroll}
-          autoscroll={autoscroll}
-          onAutoscrollToggle={handleAutoscroll}
           isFirst={index === 0}
           isLast={index === videos.length - 1}
         />
