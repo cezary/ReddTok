@@ -16,17 +16,15 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
+  // SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-
-import { MdiAlert, MdiFire, MdiFormatVerticalAlignTop, MdiInformationSlabCircleOutline, MdiNewBox, MdiTrendingUp } from "./icons"
-import Link from "./link"
+import { Switch } from "@/components/ui/switch";
 import { useUIStore } from "@/lib/stores/ui";
-import { useSearchParams } from "next/navigation";
 
-export function AppSidebar() {
+export default React.memo(function AppSidebar() {
   const searchParams = useSearchParams();
-  const { setAlert } = useUIStore();
+  const { live, setAlert, setLive } = useUIStore();
 
   function handleAboutClick() {
     setAlert({
@@ -103,6 +101,13 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarGroupLabel className='text-base'>App</SidebarGroupLabel>
+            <SidebarMenuButton className='text-base flex flex-row items-center' asChild>
+              <div onClick={handleLiveModeClick} >
+                <MaterialSymbolsClearDayRounded className='inline-block text-2xl' />
+                <Label className='ml-2 text-base flex-grow' htmlFor="airplane-mode">Live Mode</Label>
+                <Switch id="airplane-mode" defaultChecked={live} />
+              </div>
+            </SidebarMenuButton>
             <SidebarMenuButton className='text-base flex flex-row items-center' onClick={handleAboutClick}>
               <MdiInformationSlabCircleOutline className='inline-block text-4xl' />
               <p className='ml-2'>About</p>
