@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useUIStore } from "@/lib/stores/ui";
 
 export const useLandingModal = () => {
-  const { setAlert, setMuted, setPaused } = useUIStore()
+  const { setDialog: setAlert, setMuted, setPaused } = useUIStore()
   useEffect(() => {
     if (!document.cookie.includes('visited=true')) {
       document.cookie = 'visited=true; expires=Fri, 31 Dec 9999 23:59:59 GMT'

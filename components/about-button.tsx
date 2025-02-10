@@ -3,7 +3,7 @@ import { useUIStore } from "@/lib/stores/ui";
 
 
 export default function AboutButton() {
-  const { setAlert } = useUIStore();
+  const { setDialog: setAlert } = useUIStore();
 
   function handleAboutClick() {
     setAlert({

@@ -24,7 +24,7 @@ import { useUIStore } from "@/lib/stores/ui";
 
 export default React.memo(function AppSidebar() {
   const searchParams = useSearchParams();
-  const { live, setAlert, setLive } = useUIStore();
+  const { live, setDialog: setAlert, setLive } = useUIStore();
 
   function handleAboutClick() {
     setAlert({

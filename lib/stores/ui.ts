@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 
-interface Alert {
+interface Dialog {
   title: string | undefined;
   description: React.ReactNode | string | undefined;
 }
 
 interface UIState {
-  alert?: Alert;
-  closeAlertCallback?: () => void;
-  setAlert: (alert: Alert, closeAlertCallback?: () => void) => void;
-  clearAlert: () => void;
+  dialog?: Dialog;
+  closeDialogCallback?: () => void;
+  setDialog: (dialog: Dialog, closeDialogCallback?: () => void) => void;
+  clearDialog: () => void;
 
   autoscroll: boolean;
   setAutoscroll: (autoscroll: boolean) => void;
@@ -28,9 +28,8 @@ interface UIState {
 }
 
 export const useUIStore = create<UIState>((set) => ({
-  alertDescription: undefined,
-  setAlert: (alert, closeAlertCallback) => set({ alert, closeAlertCallback }),
-  clearAlert: () => set({ alert: undefined }),
+  setDialog: (dialog, closeDialogCallback) => set({ dialog, closeDialogCallback }),
+  clearDialog: () => set({ dialog: undefined }),
 
   autoscroll: true,
   setAutoscroll: (autoscroll: boolean) => set({ autoscroll }),
