@@ -8,6 +8,7 @@ import AppHeader from '@/components/app-header';
 import { MdiAlert, MdiTelevisionOff, MingcuteLoadingFill } from '@/components/icons';
 import VideoList  from '@/components/video-list';
 import { useGetVideos } from '@/lib/api';
+import { DEFAULT_SORT } from '@/lib/constants';
 import { formatGetVideosData } from '@/lib/format';
 import { useUIStore } from '@/lib/stores/ui';
 import { Sort, SORTS } from '@/lib/types';
@@ -24,7 +25,7 @@ export default function VideoFeed({
   const { live } = useUIStore();
   const searchParams = useSearchParams();
   const sortParam = searchParams.get('sort');
-  const sort: Sort = ((sortParam && (SORTS as readonly string[]).includes(sortParam)) ? sortParam : 'hot') as Sort;
+  const sort: Sort = ((sortParam && (SORTS as readonly string[]).includes(sortParam)) ? sortParam : DEFAULT_SORT) as Sort;
   const { data, error, isLoading, size, setSize, isValidating } = useGetVideos({ live, postId, sort, subreddit, username });
   const videos = formatGetVideosData(data);
 

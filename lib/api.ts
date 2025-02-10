@@ -1,7 +1,7 @@
 import { track } from '@vercel/analytics';
 import useSWRInfinite from 'swr/infinite'
 
-import { DEFAULT_SUBREDDITS } from '@/lib/constants';
+import { DEFAULT_SORT, DEFAULT_SUBREDDITS } from '@/lib/constants';
 import { RedditPostListing, Sort } from '@/lib/types';
 
 function updateSearchParams(urlString: string, queryParams: Record<string, number | string | undefined>) {
@@ -22,7 +22,7 @@ class RedditError extends Error {
 export const useGetVideos = ({
   live,
   postId,
-  sort='hot',
+  sort=DEFAULT_SORT,
   subreddit,
   username,
 }: {

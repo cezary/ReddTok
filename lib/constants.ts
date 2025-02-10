@@ -1,4 +1,4 @@
-export const DEFAULT_SORT = 'hot';
+export const DEFAULT_SORT = 'new';
 
 export const SEEK_TIME = 5;
 
